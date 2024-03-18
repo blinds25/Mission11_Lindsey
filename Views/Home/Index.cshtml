@@ -1,0 +1,70 @@
+﻿@model Mission11_Lindsey.Models.BooksListViewModel
+
+<div>
+    <h1 class="text-center">You thought we were only about movies?</h1>
+    <h3 class="text-center">We ain't messing around. Read a book, too</h3>
+    <br />
+    <h4 class="text-center">Here are some good ones:</h4>
+    <br />
+</div>
+
+<div>
+<table class="table table-bordered">
+    <thead class="thead-dark bg-info">
+        <tr>
+            <th class="text-center vertical-center">Title</th>
+            <th class="text-center vertical-center">Author</th>
+            <th class="text-center vertical-center">Publisher</th>
+            <th class="text-center vertical-center">ISBN</th>
+            <th class="text-center vertical-center">Classification</th>
+            <th class="text-center vertical-center">Category</th>
+            <th class="text-center vertical-center">Page Count</th>
+            <th class="text-center vertical-center">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Publisher</td>
+                <td>@book.Isbn</td>
+                <td>@book.Classification</td>
+                <td>@book.Category</td>
+                <td>@book.PageCount</td>
+                <td>@book.Price.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @if (Model.PageInfo.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageInfo.CurrentPage - 1 })" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+        }
+        @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PageInfo.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+            </li>
+        }
+        @if (Model.PageInfo.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageInfo.CurrentPage + 1 })" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
